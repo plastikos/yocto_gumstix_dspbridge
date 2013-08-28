@@ -1,0 +1,17 @@
+diff --git a/drivers/staging/tidspbridge/core/wdt.c b/drivers/staging/tidspbridge/core/wdt.c
+index 1dce36f..8eb2967 100644
+--- a/drivers/staging/tidspbridge/core/wdt.c
++++ b/drivers/staging/tidspbridge/core/wdt.c
+@@ -117,6 +118,12 @@ void dsp_wdt_enable(bool enable)
+ 	if (wdt_enable == enable || !dsp_wdt.fclk || !dsp_wdt.iclk)
+ 		return;
+ 
++	if (!dsp_wdt.sm_wdt)
++	{
++		pr_warning("dsp_wdt.sm_wdt == NULL\n");
++		return;
++	}
++
+ 	wdt_enable = enable;
+ 
+ 	if (enable) {

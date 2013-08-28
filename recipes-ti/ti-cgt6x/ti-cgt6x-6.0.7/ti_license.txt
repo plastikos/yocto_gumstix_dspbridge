@@ -1,0 +1,63 @@
+============
+ Copyrights
+============
+
+Texas Instruments is pleased to provide the information on these pages of
+the World Wide Web. We encourage you to read and use this information in
+developing new products.
+
+TI grants permission to download, print copies, store downloaded files on a
+computer and reference this information in your documents only for your
+personal and non-commercial use. But remember, TI retains its copyright in
+all of this information. This means that you may not further display,
+reproduce, or distribute this information without permission from Texas
+Instruments. This also means you may not, without our permission, "mirror"
+this information on your own server, or modify or re-use this information
+on another system.
+
+TI further grants permission to non-profit, educational institutions
+(specifically K-12, universities and community colleges) to download,
+reproduce, display and distribute the information on these pages solely for
+use in the classroom. This permission is conditioned on not modifying the
+information, retaining all copyright notices and including on all
+reproduced information the following credit line: "Courtesy of Texas
+Instruments". Please send us a note describing your use of this information
+under the permission granted in this paragraph. Send the note and describe
+the use according to the request for permission explained below.
+
+Please send requests for permission, beyond the preceding two grants, to
+make copies of the information on these pages to:
+
+  * copyrightcounsel at list dot ti dot com (substitute special characters
+    as required), or
+  * Texas Instruments Incorporated::
+      Attn: Copyright Counsel
+      P.O. Box 655474, MS 3999
+      Dallas, Texas 75265
+
+  Please identify:
+
+    * Your company or organization name,
+    * The information you want to copy,
+    * The number of copies you plan on making, and
+    * The intended use of the information.
+
+    These permissions terminate if the use of this information under these
+    limited permissions adversely affects the reputation of TI, as
+    determined solely by TI. These permissions also terminate if you breach
+    any of these terms and conditions. Upon termination you agree to
+    destroy all copies of information downloaded from this site.
+
+    Copyright laws and other intellectual property laws in the United
+    States and other countries protect the information presented on these
+    pages. Use of any of this information beyond these limited permissions
+    is expressly prohibited by law, and may result in civil and criminal
+    penalties. Except as stated herein, the information on these pages of
+    the World Wide Web may not be copied in any form or by any means
+    without TI's prior written consent.
+
+    Some photos courtesy of PhotoDisc, Inc. Those photos Digital Imagrery ©
+    Copyright 2006 PhotoDisc, Inc.
+
+    Some photos courtesy of Digital Vision, Ltd. Those photos © Copyright
+    2006 Digital Vision ® Ltd.

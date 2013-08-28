@@ -1,0 +1,23 @@
+require linux.inc
+
+DESCRIPTION = "Linux kernel for OMAP processors"
+KERNEL_IMAGETYPE = "uImage"
+
+COMPATIBLE_MACHINE = "overo"
+
+BOOT_SPLASH ?= "logo_linux_clut224-generic.ppm"
+PV = "3.11"
+
+S = "${WORKDIR}/git"
+
+SRCREV = "${AUTOREV}"
+SRC_URI = "git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git;branch=v3.11;protocol=git \
+           file://defconfig \
+           file://${BOOT_SPLASH} \
+           file://tidspbridge.patch \
+           file://uimage_loadaddr.patch \
+           "
+
+#           file://omap_hsmmc-3.5.patch \
+#           file://omap_dma_mask.patch \
+#           file://spi-omap2-mcspi-3.5.patch \

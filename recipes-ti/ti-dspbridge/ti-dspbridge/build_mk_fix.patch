@@ -1,0 +1,41 @@
+diff --git a/source/mpu_api/make/build.mk b/source/mpu_api/make/build.mk
+index 7235fbe..5b3c9fb 100644
+--- a/source/mpu_api/make/build.mk
++++ b/source/mpu_api/make/build.mk
+@@ -150,7 +150,7 @@ LIBFILE := $(addprefix -l, $(ST_LIBS) $(SH_LIBS)) $(LIB_OBJS)
+ 
+ ifeq ($(TARGETTYPE),SH_LIB)
+ CFLAGS += -fpic
+-TARGETARGS := $(SH_LIB_ARGS) -nostartfiles -nodefaultlibs -nostdlib -shared -Wl
++TARGETARGS := $(SH_LIB_ARGS) -nostartfiles -nodefaultlibs -nostdlib -shared
+ ifneq ($(SH_SONAME),)
+ TARGETARGS += -Wl,-soname,$(SH_SONAME)
+ endif
+diff --git a/source/mpu_api/src/bridge/Makefile b/source/mpu_api/src/bridge/Makefile
+index 906a29e..12bc314 100644
+--- a/source/mpu_api/src/bridge/Makefile
++++ b/source/mpu_api/src/bridge/Makefile
+@@ -90,7 +90,8 @@ INCLUDES    = \
+ # Libraries needed for linking.
+ 
+ ST_LIBS        =
+-SH_LIBS        = pthread
++SH_LIBS        =
++LIB_OBJS       = -lpthread
+ 
+ # Search path for library (and linker command) files.
+ # Current folder and target folder are included by default.
+diff --git a/source/mpu_api/src/qos/Makefile b/source/mpu_api/src/qos/Makefile
+index 58d4d4e..a3805db 100644
+--- a/source/mpu_api/src/qos/Makefile
++++ b/source/mpu_api/src/qos/Makefile
+@@ -89,7 +89,8 @@ INCLUDES    = \
+ # Libraries needed for linking.
+ 
+ ST_LIBS        =
+-SH_LIBS        = pthread
++SH_LIBS        =
++LIB_OBJS       = -lpthread
+ 
+ # Search path for library (and linker command) files.
+ # Current folder and target folder are included by default.
