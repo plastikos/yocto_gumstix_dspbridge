@@ -1,0 +1,93 @@
+#!/bin/sh
+
+set -e
+set -u
+set -x
+
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+
+DEVICE=
+IMGDIR=
+IMG_NAME=
+
+
+partition()
+{
+    local size="$(sfdisk -s "$DEVICE")"
+    local cylinders="$((size*2/255/63))"
+    local fstype="$(sed -n -e '/bootargs/ {s/.*rootfstype=//; s/ .*//; p}' "$IMGDIR/bootcmd")"
+
+    dd if=/dev/zero of="$DEVICE" bs=1024 count=1024
+    sfdisk --force -D -uS -H 255 -S 63 -C "$cylinders" "$DEVICE" <<EOF
+128,130944,0x0C,*
+131072,,,-
+;
+;
+EOF
+    blockdev --rereadpt "${DEVICE}"
+
+    mkfs.vfat -F 32 "${DEVICE}1" -n boot
+    mkfs.$fstype -j -L rootfs "${DEVICE}2"
+}
+
+
+populate()
+{
+    mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "myscript" -d "$IMGDIR/bootcmd" "$IMGDIR/boot.scr"
+
+    mkdir -p /tmp/boot
+    mount "${DEVICE}1" /tmp/boot
+    trap "umount /tmp/boot; rmdir /tmp/boot" EXIT
+    cp \
+        "$IMGDIR/MLO" \
+        "$IMGDIR/u-boot.img" \
+        "$IMGDIR/uImage" \
+        "$IMGDIR/boot.scr" \
+        /tmp/boot/
+    sync
+    trap - EXIT
+    umount /tmp/boot
+    rmdir /tmp/boot
+
+    mkdir -p /tmp/rootfs
+    mount "${DEVICE}2" /tmp/rootfs
+    trap "umount /tmp/rootfs; rmdir /tmp/rootfs" EXIT
+    tar xaf "$IMGDIR/$IMG_NAME.tar.bz2" -C /tmp/rootfs
+    sync
+    trap - EXIT
+    umount /tmp/rootfs
+    rmdir /tmp/rootfs
+}
+
+
+unmount_device()
+{
+    local device="$1"
+
+    local dev=
+    for dev in "${device}"[0-9]*; do
+	umount "$dev" || true
+    done
+}
+
+
+main()
+{
+    DEVICE="$1"
+    IMGDIR="$(cd "$2" && pwd)"
+    IMG_NAME="$3"
+    shift 2
+
+    unmount_device "$DEVICE"
+    partition
+    populate
+}
+
+
+if [ 0 -eq $# ]; then
+   main
+else
+   main "$@"
+fi

@@ -18,7 +18,7 @@ SRC_URI = "\
 
 S = "${WORKDIR}"
 
-INSTALL_DIR = "/opt/titools"
+INSTALL_DIR = "/opt/ti-tools"
 
 PACAKGES = "${PN}"
 FILES_${PN} = "${INSTALL_DIR}/*"
@@ -29,7 +29,7 @@ do_compile() {
 }
 
 do_install() {
-    ./bios_setuplinux_${TI_PV}.bin -Y --mode silent --prefix "${D}${INSTALL_DIR}"
+    DISPLAY="" ./bios_setuplinux_${TI_PV}.bin -Y --mode silent --prefix "${D}${INSTALL_DIR}"
     find "${D}${INSTALL_DIR}" -type d -print0 | xargs -0 chmod 755
     chmod 755 \
         "${D}${INSTALL_DIR}"/*/xdctools/cdb2tcf \

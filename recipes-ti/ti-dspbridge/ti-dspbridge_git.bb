@@ -32,30 +32,30 @@ SRC_URI = "git://dev.omapzoom.org/pub/scm/tidspbridge/userspace-dspbridge.git;pr
 
 do_compile() {
 
-    cd ${S}/source
+    cd "${S}/source"
 
     make \
         CROSS='${TARGET_PREFIX}' \
         KRNLSRC=${STAGING_KERNEL_DIR} \
-        DEPOT=${STAGING_DIR_NATIVE}/opt/titools \
+        DEPOT=${STAGING_DIR_NATIVE}/opt/ti-tools \
         .api .samples .dsp
 
     make \
         CROSS='${TARGET_PREFIX}' \
         KRNLSRC=${STAGING_KERNEL_DIR} \
-        DEPOT=${STAGING_DIR_NATIVE}/opt/titools \
+        DEPOT=${STAGING_DIR_NATIVE}/opt/ti-tools \
         .samples
 
     make \
         CROSS='${TARGET_PREFIX}' \
         KRNLSRC=${STAGING_KERNEL_DIR} \
-        DEPOT=${STAGING_DIR_NATIVE}/opt/titools \
+        DEPOT=${STAGING_DIR_NATIVE}/opt/ti-tools \
         .dsp
 
     make \
         CROSS='${TARGET_PREFIX}' \
         KRNLSRC=${STAGING_KERNEL_DIR} \
-        DEPOT=${STAGING_DIR_NATIVE}/opt/titools \
+        DEPOT=${STAGING_DIR_NATIVE}/opt/ti-tools \
         -f samplemakefile .bridge_samples
 }
 
@@ -66,7 +66,7 @@ do_install() {
     #make \
     #    CROSS='${TARGET_PREFIX}' \
     #    KRNLSRC='${STAGING_KERNEL_DIR}' \
-    #    DEPOT='${STAGING_DIR_NATIVE}/opt/titools' \
+    #    DEPOT='${STAGING_DIR_NATIVE}/opt/ti-tools' \
     #    TARGETDIR='${D}' \
     #    -f samplemakefile .install
     #

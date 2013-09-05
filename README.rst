@@ -8,10 +8,6 @@ __ http://www.omappedia.com/wiki/DSPBridge_Project
 `Linux OMAP Project`__
 __ http://omappedia.org/wiki/Linux_OMAP_Kernel_Project
 
-BeagleBoard
-===========
-
-http://elinux.org/BeagleBoard/DSP_Howto
 
 Gumstix WaterSTORM
 ==================
@@ -84,6 +80,8 @@ http://www.ti.com/product/dm3730#technicaldocuments
 TI Linux
 ++++++++
 
+(This isn't too useful)
+
 http://www.ti.com/tool/linuxdvsdk-dm37x
 http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/dvsdk/DVSDK_4_00/latest/index_FDS.html
 
@@ -146,103 +144,10 @@ TI DM3730/25 Specs
   - 16-bit Wide Multiplexed Address/Data
 
 
-Managing GIT remote trees
-+++++++++++++++++++++++++
+TI Tools
+========
 
-http://omappedia.org/wiki/Linux_OMAP_integration_tree
-
-commands::
-
-  # Not this?
-  git clone git://dev.omapzoom.org/pub/scm/integration/kernel-omap3.git linux-omap3-2.6.git
-  cd linux-omap3-2.6.git
-  git remote add -t master linux-omap git://git.kernel.org/pub/scm/linux/kernel/git/tmlind/linux-omap-2.6.git
-  git remote add pm git://git.kernel.org/pub/scm/linux/kernel/git/khilman/linux-omap-pm.git
-  git remote add bridge git://dev.omapzoom.org/pub/scm/tidspbridge/kernel-dspbridge.git
-  git remote update
-
-  # But this?
-  git clone https://github.com/gumstix/linux.git linux-gumstix.git
-
-  # Still use this?
-  cd ..
-  git clone git://dev.omapzoom.org/pub/scm/tidspbridge/userspace-dspbridge.git userspace-dspbridge.git
-
-DSP Tools: http://code.google.com/p/gst-dsp/downloads/list
-
-Steps
-=====
-
-commands::
-
-  git clone https://github.com/gumstix/linux.git linux-gumstix.git
-
-  cd ..
-  git clone git://dev.omapzoom.org/pub/scm/tidspbridge/userspace-dspbridge.git userspace-dspbridge.git
-
-  cd ..
-  git clone git://github.com/gumstix/u-boot.git u-boot.git
-
-
-Ubuntu tools::
-
-  deb http://ppa.launchpad.net/linaro-maintainers/toolchain/ubuntu natty main
-  deb-src http://ppa.launchpad.net/linaro-maintainers/toolchain/ubuntu natty main
-
-  deb http://ppa.launchpad.net/linaro-maintainers/tools/ubuntu natty main
-  deb-src http://ppa.launchpad.net/linaro-maintainers/tools/ubuntu natty main
-
-Install packages::
-
-  sudo apt-get install linaro-image-tools python-linaro-image-tools python-linaro-media-create gcc-linaro-arm-linux-gnueabi
-
-Gumstix Info: http://gumstix.org/access-source-code.html
-
-Yocto build: https://github.com/gumstix/Gumstix-YoctoProject-Repo
-
-Create work directory::
-
-  >$ mkdir yocto
-
-Install support packages::
-
-  >$ sudo dpkg --add-architecture i386
-  >$ sudo apt-get update
-  >$ sudo apt-get install u-boot-tools libc6:i386 libstdc++5:i386
-
-Download TI tools:
-
-  #. create TI account
-  #. download TI ti_cgt_c6000 6.0.7 and put in `yocto/ti_pkgs` dir
-  #. download TI bios_setuplinux 5_33_04 and put in `yocto/ti_pkgs` dir
-  #. The TI tools use the i386 libraries from the support packages
-
-Yocto file system build: http://gumstix.org/software-development/yocto-project.html::
-
-  cd yocto
-
-  curl https://dl-ssl.google.com/dl/googlesource/git-repo/repo >repo
-  chmod a+x repo
-
-  ./repo init -u git://github.com/gumstix/Gumstix-YoctoProject-Repo.git -b master
-  ./repo sync
-  TEMPLATECONF=meta-gumstix-dspbridge/conf source ./poky/oe-init-build-env
-  bitbake gumstix-console-image
-  #bitbake core-image-minimal
-
-`DSP Howto`__
-
-__ http://elinux.org/BeagleBoard/DSP_Howto
-
-`OpenMAX`__
-
-__ http://omappedia.org/wiki/Angstrom_OpenMAX
-
-Get
-https://gforge.ti.com/gf/download/frsrelease/352/3679/TI-Linux-RLS-23i3.8.tar.bz2
-unpack and use tidspbridge recipes
-
-Must install cgt6x-6.0.7, bios_5_33_04
+Must install cgt6x-6.0.7, bios_5_33_04, dsplib_c64Px_3_1_1_1
 
 DSP/BIOS http://software-dl.ti.com/dsps/dsps_registered_sw/sdo_sb/targetcontent/bios/index.html
 bios_setuplinux_5_33_04.bin http://software-dl.ti.com/dsps/dsps_registered_sw/sdo_sb/targetcontent/bios/bios_5_33/bios_5_33_06/exports/bios_setuplinux_5_33_04.bin
@@ -252,3 +157,75 @@ ti_cgt_c6000_6.0.7_setup_linux_x86.bin https://focus-webapps.ti.com/licreg/docs/
 
 TMS320C6000 DSP Library (DSPLIB)
 http://www.ti.com/tool/SPRC265
+http://software-dl.ti.com/sdoemb/sdoemb_public_sw/dsplib/latest/index_FDS.html
+dsplib_c64Px_3_1_1_1_Linux.bin http://software-dl.ti.com/sdoemb/sdoemb_public_sw/dsplib/latest/exports/dsplib_c64Px_3_1_1_1_Linux.bin
+
+
+Make it Go!
+===========
+
+Create work directory::
+
+  >$ mkdir $SOME_PATH/yocto/ti_pkgs
+
+Install support packages::
+
+  >$ sudo dpkg --add-architecture i386
+  >$ sudo apt-get update
+  >$ sudo apt-get install u-boot-tools libc6:i386 libstdc++5:i386
+
+Download TI tools (from above):
+
+  #. create TI account
+  #. download TI ti_cgt_c6000 6.0.7 and put in `yocto/ti_pkgs` dir
+  #. download TI bios_setuplinux 5_33_04 and put in `yocto/ti_pkgs` dir
+  #. download TI DSPLIB dsplib_c64Px_3_1_1_1_Linux.bin and put in `yocto/ti_pkgs` dir
+  #. The TI tools use the i386 libraries from the support packages
+
+Yocto file system build: http://gumstix.org/software-development/yocto-project.html::
+
+  cd $SOME_PATH/yocto
+
+  curl https://dl-ssl.google.com/dl/googlesource/git-repo/repo >repo
+  chmod a+x repo
+
+  ./repo init -u git://github.com/gumstix/Gumstix-YoctoProject-Repo.git -b master
+  ./repo sync
+  TEMPLATECONF=meta-gumstix-dspbridge/conf source ./poky/oe-init-build-env
+  #bitbake gumstix-console-image
+  bitbake core-image-minimal
+
+Image SD Card::
+
+  >$ poky/meta-gumstix-dspbridge/bin/gumstix_partition /dev/sdX $SOME_PATH/build/tmp/deploy/images core-image-minimal-overo
+
+Boot:
+
+  #. Plug in mini USB
+  #. Start serial monitor::
+
+    >$ screen /dev/ttyUSB0 115200
+
+  #. Plug power
+  #. Login with user `root` and no password
+
+Load BIOS::
+
+  >$ modprobe tidspbridge # unnecessary
+  >$ /dspbridge/samples/cexec.out /dspbridge/dsp/ddspbase_tiomap3430.dof64P
+  >$ /dspbridge/samples/ping.out 50
+
+Cross Compile Environment::
+
+  >$ bitabke meta-toolchain
+  >$ tmp/deploy/sdk
+
+
+Build DSP Progs
+===============
+
+Make a bitbake recipe
+
+Build source::
+
+  >$ bitbake -v -b $SOME_PATH/recipes-srf/dsp-demo_0.1.bb

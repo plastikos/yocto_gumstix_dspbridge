@@ -17,7 +17,7 @@ SRC_URI = "\
 
 S = "${WORKDIR}"
 
-INSTALL_DIR = "/opt/titools"
+INSTALL_DIR = "/opt/ti-tools"
 
 PACAKGES = "${PN}"
 FILES_${PN} = "${INSTALL_DIR}/*"
@@ -28,7 +28,7 @@ do_compile() {
 }
 
 do_install() {
-    ./ti_cgt_c6000_${PV}_setup_linux_x86.bin --mode silent --prefix "${D}${INSTALL_DIR}/cgt6x-${PV}"
+    DISPLAY="" ./ti_cgt_c6000_${PV}_setup_linux_x86.bin --mode silent --prefix "${D}${INSTALL_DIR}/cgt6x-${PV}"
     find "${D}${INSTALL_DIR}" -type d -print0 | xargs -0 chmod 755
     chmod 755 "${D}${INSTALL_DIR}"/*/bin/*
 }
@@ -38,5 +38,5 @@ do_populate_sysroot() {
         # Ensure that ${INSTALL_DIR} gets put where it will be found
         mkdir -p "${SYSROOT_DESTDIR}${STAGING_DIR_NATIVE}"
         tar -C "${D}" -cf - . | tar -C "${SYSROOT_DESTDIR}${STAGING_DIR_NATIVE}" -xf -
-	fi
+    fi
 }
