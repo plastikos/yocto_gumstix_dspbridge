@@ -164,19 +164,19 @@ dsplib_c64Px_3_1_1_1_Linux.bin http://software-dl.ti.com/sdoemb/sdoemb_public_sw
 Make it Go!
 ===========
 
-Create work directory::
-
-  >$ mkdir $SOME_PATH/yocto/ti_pkgs
-
 Install support packages::
 
   >$ sudo dpkg --add-architecture i386
   >$ sudo apt-get update
   >$ sudo apt-get install u-boot-tools libc6:i386 libstdc++5:i386
 
-Download TI tools (from above):
+Create work directory::
 
-  #. create TI account
+  >$ mkdir $SOME_PATH/yocto/ti_pkgs
+
+Download TI tools (from above) and put in `yocto/ti_pkgs` dir:
+
+  #. create TI.com account
   #. download TI ti_cgt_c6000 6.0.7 and put in `yocto/ti_pkgs` dir
   #. download TI bios_setuplinux 5_33_04 and put in `yocto/ti_pkgs` dir
   #. download TI DSPLIB dsplib_c64Px_3_1_1_1_Linux.bin and put in `yocto/ti_pkgs` dir
@@ -191,6 +191,9 @@ Yocto file system build: http://gumstix.org/software-development/yocto-project.h
 
   ./repo init -u git://github.com/gumstix/Gumstix-YoctoProject-Repo.git -b master
   ./repo sync
+  cd poky
+  git clone git@github.com:plastikos/yocto_gumstix_dspbridge.git meta-gumstix-dspbridge
+  cd ..
   TEMPLATECONF=meta-gumstix-dspbridge/conf source ./poky/oe-init-build-env
   #bitbake gumstix-console-image
   bitbake core-image-minimal
