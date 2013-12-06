@@ -190,7 +190,7 @@ Yocto file system build: http://gumstix.org/software-development/yocto-project.h
 
   cd $SOME_PATH/yocto
 
-  curl https://dl-ssl.google.com/dl/googlesource/git-repo/repo >repo
+  curl http://commondatastorage.googleapis.com/git-repo-downloads/repo >repo
   chmod a+x repo
 
   ./repo init -u git://github.com/gumstix/Gumstix-YoctoProject-Repo.git -b master
@@ -227,3 +227,18 @@ Cross Compile Environment::
   >$ bitabke meta-toolchain
   >$ tmp/deploy/sdk
 
+
+Build DSP Progs
+===============
+
+Make a bitbake recipe
+
+Build source::
+
+  >$ bitbake -v -b $SOME_PATH/recipes-srf/dsp-demo_0.1.bb
+
+
+GMTI
+====
+
+Look here: /mnt/work/thayne/dev/srf-magma/user-home/spotter/gmti
