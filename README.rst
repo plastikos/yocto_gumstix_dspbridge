@@ -227,18 +227,3 @@ Cross Compile Environment::
   >$ bitabke meta-toolchain
   >$ tmp/deploy/sdk
 
-
-Build DSP Progs
-===============
-
-Make a bitbake recipe
-
-Build source::
-
-  >$ bitbake -v -b $SOME_PATH/recipes-srf/dsp-demo_0.1.bb
-
-
-GMTI
-====
-
-Look here: /mnt/work/thayne/dev/srf-magma/user-home/spotter/gmti
