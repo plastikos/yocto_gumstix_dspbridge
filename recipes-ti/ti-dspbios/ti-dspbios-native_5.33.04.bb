@@ -16,6 +16,8 @@ SRC_URI = "\
            file://ti_license.txt \
           "
 
+SRC_URI[md5sum] = "fcffe1618f20024fd6580f47cdc0059b"
+
 S = "${WORKDIR}"
 
 INSTALL_DIR = "/opt/ti-tools"

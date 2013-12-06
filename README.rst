@@ -17,7 +17,7 @@ https://www.gumstix.com/store/product_info.php?products_id=265
 Gumstix DSP on Overo Water
 ++++++++++++++++++++++++++
 
-http://wiki.gumstix.org//index.php?title=Category:How_to_-_DSP
+`http://wiki.gumstix.org//index.php?title=Category:How_to_-_DSP`
 
 
 Details
@@ -160,6 +160,10 @@ http://www.ti.com/tool/SPRC265
 http://software-dl.ti.com/sdoemb/sdoemb_public_sw/dsplib/latest/index_FDS.html
 dsplib_c64Px_3_1_1_1_Linux.bin http://software-dl.ti.com/sdoemb/sdoemb_public_sw/dsplib/latest/exports/dsplib_c64Px_3_1_1_1_Linux.bin
 
+IQMath C64x+
+http://www.ti.com/tool/sprc542
+c64xplus-iqmath_2_01_04_00_Linux-x86_Setup.bin http://software-dl.ti.com/dsps/dsps_public_sw/c6000/web/c64p_iqmath/latest/exports//c64xplus-iqmath_2_01_04_00_Linux-x86_Setup.bin
+
 
 Make it Go!
 ===========
@@ -195,8 +199,8 @@ Yocto file system build: http://gumstix.org/software-development/yocto-project.h
   git clone git@github.com:plastikos/yocto_gumstix_dspbridge.git meta-gumstix-dspbridge
   cd ..
   TEMPLATECONF=meta-gumstix-dspbridge/conf source ./poky/oe-init-build-env
-  #bitbake gumstix-console-image
-  bitbake core-image-minimal
+  bitbake gumstix-console-image
+  #bitbake core-image-minimal
 
 Image SD Card::
 
@@ -232,3 +236,9 @@ Make a bitbake recipe
 Build source::
 
   >$ bitbake -v -b $SOME_PATH/recipes-srf/dsp-demo_0.1.bb
+
+
+GMTI
+====
+
+Look here: /mnt/work/thayne/dev/srf-magma/user-home/spotter/gmti

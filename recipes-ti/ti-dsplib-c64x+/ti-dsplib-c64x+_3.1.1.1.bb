@@ -21,9 +21,11 @@ SRC_URI = "\
            file://ti_license.txt \
           "
 
+SRC_URI[md5sum] = "9a6a94a48d2098174ec2d31de399ef34"
+
 S = "${WORKDIR}"
 
-INSTALL_DIR = "${libdir}/ti-tools/dsplib_c64x+"
+INSTALL_DIR = "${libdir}/ti-tools/dsplib_c64x+-${PV}"
 INHIBIT_PACKAGE_STRIP = "1"
 
 # Nothing to compile
