@@ -2,63 +2,95 @@
 
 set -e
 set -u
-set -x
 
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
 
 DEVICE=
-IMGDIR=
-IMG_NAME=
+IMG_DIR=
+IMG_FILE=
+PARTCHR=
+TEMP_DIR=
+BOOT_CMD=
+
+
+# Exit codes
+EX_OK=0
+EX_USAGE=64
+EX_UNAVAILABLE=69
+EX_OSFILE=71
+EX_TEMPFAIL=75
+EX_NOPERM=77
+
+
+cleanup()
+{
+    local rc=$?
+
+    if [ -n "$TEMP_DIR" -a -d "$TEMP_DIR" ]; then
+	sync
+	umount "$TEMP_DIR/rootfs" 2>/dev/null || true
+	umount "$TEMP_DIR/boot"   2>/dev/null || true
+	rm -rf "$TEMP_DIR"
+    fi
+
+    if [ $EX_OK -ne $rc ]; then
+	printf "ERROR: imaging failed - exit $rc\n" >&2
+    else
+	printf "SUCCESS\n"
+    fi
+}
 
 
 partition()
 {
     local size="$(sfdisk -s "$DEVICE")"
     local cylinders="$((size*2/255/63))"
-    local fstype="$(sed -n -e '/bootargs/ {s/.*rootfstype=//; s/ .*//; p}' "$IMGDIR/bootcmd")"
+    local fstype="$(sed -n -e '/bootargs/ {s/.*rootfstype=//; s/ .*//; p}' "$BOOT_CMD")"
 
     dd if=/dev/zero of="$DEVICE" bs=1024 count=1024
+    # Ignore failures and hope for the best??
     sfdisk --force -D -uS -H 255 -S 63 -C "$cylinders" "$DEVICE" <<EOF
 128,130944,0x0C,*
 131072,,,-
 ;
 ;
 EOF
+    blockdev --flushbufs "${DEVICE}"
+    sleep 10
     blockdev --rereadpt "${DEVICE}"
 
-    mkfs.vfat -F 32 "${DEVICE}1" -n boot
-    mkfs.$fstype -j -L rootfs "${DEVICE}2"
+    mkfs.vfat -F 32 "${DEVICE}${PARTCHR}1" -n boot
+    mkfs.$fstype -j -L rootfs "${DEVICE}${PARTCHR}2"
 }
 
 
 populate()
 {
-    mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n "myscript" -d "$IMGDIR/bootcmd" "$IMGDIR/boot.scr"
+    mkimage					\
+	-A arm					\
+	-O linux				\
+	-T script				\
+	-C none					\
+	-a 0					\
+	-e 0					\
+	-n "myscript"				\
+	-d "$BOOT_CMD"				\
+	"$TEMP_DIR/boot.scr"
 
-    mkdir -p /tmp/boot
-    mount "${DEVICE}1" /tmp/boot
-    trap "umount /tmp/boot; rmdir /tmp/boot" EXIT
+    mkdir -p "$TEMP_DIR/boot"
+    mount "${DEVICE}${PARTCHR}1" "$TEMP_DIR/boot"
     cp \
-        "$IMGDIR/MLO" \
-        "$IMGDIR/u-boot.img" \
-        "$IMGDIR/uImage" \
-        "$IMGDIR/boot.scr" \
-        /tmp/boot/
-    sync
-    trap - EXIT
-    umount /tmp/boot
-    rmdir /tmp/boot
+        "$IMG_DIR/MLO" \
+        "$IMG_DIR/u-boot.img" \
+        "$IMG_DIR/uImage" \
+        "$TEMP_DIR/boot.scr" \
+        "$TEMP_DIR/boot/"
 
-    mkdir -p /tmp/rootfs
-    mount "${DEVICE}2" /tmp/rootfs
-    trap "umount /tmp/rootfs; rmdir /tmp/rootfs" EXIT
-    tar xaf "$IMGDIR/$IMG_NAME.tar.bz2" -C /tmp/rootfs
-    sync
-    trap - EXIT
-    umount /tmp/rootfs
-    rmdir /tmp/rootfs
+    mkdir -p "$TEMP_DIR/rootfs"
+    mount "${DEVICE}${PARTCHR}2" "$TEMP_DIR/rootfs"
+    tar xaf "$IMG_FILE" -C "$TEMP_DIR/rootfs"
 }
 
 
@@ -67,19 +99,126 @@ unmount_device()
     local device="$1"
 
     local dev=
-    for dev in "${device}"[0-9]*; do
+    for dev in "${device}${PARTCHR}"[0-9]*; do
 	umount "$dev" || true
     done
 }
 
 
+usage()
+{
+    cat <<EOF
+Usage:
+
+  $0 -d DEVICE -i IMAGE_PATH
+
+Summary:
+
+  Image an SD card for a gumstix (create partitions, make file
+  systems, install boot loader, deploy rootfs files)
+
+  Must be run as root!
+
+Arguments:
+
+  -d DEVICE       Such as /dev/mmcblk0 or /dev/sdb
+  -i IMAGE_PATH   Path to the file system image
+
+  -x              Enable debugging
+  -h              This help output (duh!)
+
+Exit Codes:
+
+   0          Success
+  64          Incorrect usage
+  77          Permission denied
+EOF
+}
+
+
+parse_opts()
+{
+    local rc=$EX_OK
+
+    if [ 0 -ne $(id --user) ]; then
+	printf "ERROR: must run as root!\n" >&2
+	exit $EX_NOPERM
+    fi
+
+    local option=
+    while getopts "d:hi:x" option; do
+        case "$option" in
+            (d)
+                DEVICE="$OPTARG"
+                ;;
+
+            (i)
+                IMG_FILE="$OPTARG"
+                ;;
+
+            (h)
+                usage
+                exit $EX_OK
+                ;;
+
+            (x)
+                set -x
+                ;;
+        esac
+    done
+
+    if [ -z "$DEVICE" ]; then
+	printf "ERROR: device argument '-d' is required (see usage -h)\n" >&2
+	exit $EX_USAGE
+    fi
+
+    if [ -z "$IMG_FILE" ]; then
+	printf "ERROR: image file argument '-i' is required (see usage -h)\n" >&2
+	exit $EX_USAGE
+    fi
+
+    IMG_DIR="$(dirname "$(readlink -f "$IMG_FILE")")"
+
+    case "$DEVICE" in
+	(*mmcblk*) PARTCHR="p" ;;
+    esac
+
+    return $rc
+}
+
+
+find_bootcmd()
+{
+    local bootcmd=
+
+    for bootcmd in				\
+	"$IMG_DIR/bootcmd"			\
+	"$IMG_DIR/boot.cmd"			\
+	"$SCRIPT_DIR/../lib/bootcmd"		\
+	; do
+	if ! [ -f "$bootcmd" ]; then
+	    continue
+	fi
+	BOOT_CMD="$bootcmd"
+	break
+    done
+
+    if [ -z "$BOOT_CMD" ]; then
+	printf "ERROR: unable to locate a bootcmd file" >&2
+	exit $EX_OSFILE
+    fi
+}
+
+
 main()
 {
-    DEVICE="$1"
-    IMGDIR="$(cd "$2" && pwd)"
-    IMG_NAME="$3"
-    shift 2
+    parse_opts "$@"
 
+    trap cleanup EXIT
+
+    TEMP_DIR="$(mktemp -d -p "/tmp" gumstix_img-XXXX)"
+
+    find_bootcmd
     unmount_device "$DEVICE"
     partition
     populate
