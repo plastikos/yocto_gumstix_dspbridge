@@ -7,3 +7,4 @@ IMAGE_INSTALL_append = " ${EXTRA_IMAGE_INSTALL}"
 # being used.
 #IMAGE_INSTALL_remove = "media-ctl"
 TOOLS_INSTALL_remove = "media-ctl"
+TOOLS_INSTALL_remove = "systemd-analyze"
