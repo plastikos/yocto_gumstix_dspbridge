@@ -1,0 +1,20 @@
+Description: automake 1.14 support
+ otherwise configuration fails
+Origin: http://lists.schmorp.de/pipermail/libev/2013q3/002256.html
+ except for the unneeded parts
+Last-Update: 2013-09-09
+--- a/configure.ac
++++ b/configure.ac
+@@ -1,10 +1,10 @@
+-AC_INIT
++AC_INIT([libev], [4.15]) dnl also update ev.h!
+ 
+ orig_CFLAGS="$CFLAGS"
+ 
+ AC_CONFIG_SRCDIR([ev_epoll.c])
+ 
+-AM_INIT_AUTOMAKE(libev,4.15) dnl also update ev.h!
++AM_INIT_AUTOMAKE
+ AC_CONFIG_HEADERS([config.h])
+ AM_MAINTAINER_MODE
+ 

@@ -51,12 +51,13 @@ partition()
 
     dd if=/dev/zero of="$DEVICE" bs=1024 count=1024
     # Ignore failures and hope for the best??
-    sfdisk --force -D -uS -H 255 -S 63 -C "$cylinders" "$DEVICE" <<EOF
-128,130944,0x0C,*
-131072,,,-
+    sfdisk --force -D -uM -H 255 -S 63 -C "$cylinders" "$DEVICE" <<EOF
+0,64,0x0C,*
+75,,,-
 ;
 ;
 EOF
+
     blockdev --flushbufs "${DEVICE}"
     sleep 10
     blockdev --rereadpt "${DEVICE}"

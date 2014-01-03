@@ -50,14 +50,12 @@
              src = self.getVarFlag(key, i)
              if src is None:
                  continue
-@@ -576,6 +581,10 @@
+@@ -576,6 +581,8 @@
                  value = copy.copy(local_var["defaultval"])
          if expand and value:
              value = self.expand(value, None)
 +        if value and flag == "_content" and local_var and "_removeactive" in local_var:
-+            value_new = ' '.join([ v for v in value.split() if v not in local_var["_removeactive"] ])
-+            if value != value_new:
-+                value = value_new
++            value = ' '.join([ v for v in value.split() if v not in local_var["_removeactive"] ])
          return value
  
      def delVarFlag(self, var, flag, **loginfo):
