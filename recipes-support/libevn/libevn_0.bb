@@ -5,6 +5,8 @@ libevnet is essentially the net module of Node.JS (v0.2.6), implemented in C \
 HOMEPAGE = "https://github.com/coolaj86/libevn"
 SECTION = "libs"
 
+DEPENDS = "libev"
+
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE.MIT;md5=e62183c2036b4d60ee6e7842f6f7c04c"
 
