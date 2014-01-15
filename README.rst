@@ -2,11 +2,9 @@
  DSP Bridge
 ============
 
-`DSPBridge Project`__
-__ http://www.omappedia.com/wiki/DSPBridge_Project
+`DSPBridge Project <http://www.omappedia.com/wiki/DSPBridge_Project>`_
 
-`Linux OMAP Project`__
-__ http://omappedia.org/wiki/Linux_OMAP_Kernel_Project
+`Linux OMAP Project <http://omappedia.org/wiki/Linux_OMAP_Kernel_Project>`_
 
 
 Gumstix WaterSTORM
@@ -77,6 +75,21 @@ TI Documentation
 
 http://www.ti.com/product/dm3730#technicaldocuments
 
+Communication between Linux (on GPP) and DSP/BIOS (on DSP) http://elinux.org/BeagleBoard/DSP_Clarification
+
+* DSP Gateway
+* DSP Link
+* DSP Bridge
+* Syslink
+
+TI Documentation for DSP Bridge:
+
+* TI `DSP/BIOS Bridge Application Integration Guide <https://gforge.ti.com/gf/download/docmanfileversion/15/662/DSPBridge_AppIntegration_Guide.pdf>`_
+* TI `Programming Guide for DSP/BIOS Bridge <https://gforge.ti.com/gf/download/docmanfileversion/6/286/db_linux_pguide.pdf>`_
+* TI `XDC Getting Started Guide <http://rtsc.eclipse.org/mediawiki-3.16/images/1/12/XDCtools_Getting_Started_Guide.pdf>`_
+* TI `XDC Consumer User’s Guide <http://www.ti.com/general/docs/lit/getliterature.tsp?baseLiteratureNumber=spruex4&fileType=pdf>`_
+
+
 TI Linux
 ++++++++
 
@@ -85,8 +98,7 @@ TI Linux
 http://www.ti.com/tool/linuxdvsdk-dm37x
 http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/dvsdk/DVSDK_4_00/latest/index_FDS.html
 
-`TI Linux OMAP Project`__
-__ http://omappedia.org/wiki/Linux_OMAP_Kernel_Project
+`TI Linux OMAP Project <http://omappedia.org/wiki/Linux_OMAP_Kernel_Project>`_
 
 * TI OMAP Linux tree: http://git.kernel.org/cgit/linux/kernel/git/tmlind/linux-omap.git/
 * TI OMAP 3 Linux integration tree: http://dev.omapzoom.org/pub/scm/integration/kernel-omap3.git
@@ -164,6 +176,10 @@ IQMath C64x+
 http://www.ti.com/tool/sprc542
 c64xplus-iqmath_2_01_04_00_Linux-x86_Setup.bin http://software-dl.ti.com/dsps/dsps_public_sw/c6000/web/c64p_iqmath/latest/exports//c64xplus-iqmath_2_01_04_00_Linux-x86_Setup.bin
 
+XDC Tools
+http://downloads.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/rtsc/
+http://downloads.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/rtsc/3_25_05_94/exports/xdctools_setuplinux_3_25_05_94.bin
+
 
 Make it Go!
 ===========
@@ -209,9 +225,9 @@ Image SD Card::
 Boot:
 
   #. Plug in mini USB
-  #. Start serial monitor::
+  #. Start serial monitor: ::
 
-    >$ screen /dev/ttyUSB0 115200
+     >$ screen /dev/ttyUSB0 115200
 
   #. Plug power
   #. Login with user `root` and no password
@@ -236,9 +252,3 @@ Make a bitbake recipe
 Build source::
 
   >$ bitbake -v -b $SOME_PATH/recipes-srf/dsp-demo_0.1.bb
-
-
-GMTI
-====
-
-Look here: /mnt/work/thayne/dev/srf-magma/user-home/spotter/gmti
