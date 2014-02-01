@@ -159,13 +159,17 @@ TI DM3730/25 Specs
 TI Tools
 ========
 
-Must install cgt6x-6.0.7, bios_5_33_04, dsplib_c64Px_3_1_1_1
+Must install cgt6x-6.0.7, bios_5_33_04, dsplib_c64Px_3_1_1_1, Framework Components
 
 DSP/BIOS http://software-dl.ti.com/dsps/dsps_registered_sw/sdo_sb/targetcontent/bios/index.html
 bios_setuplinux_5_33_04.bin http://software-dl.ti.com/dsps/dsps_registered_sw/sdo_sb/targetcontent/bios/bios_5_33/bios_5_33_06/exports/bios_setuplinux_5_33_04.bin
 
 CGT C6000 https://www-a.ti.com/downloads/sds_support/TICodegenerationTools/download.htm
 ti_cgt_c6000_6.0.7_setup_linux_x86.bin https://focus-webapps.ti.com/licreg/docs/swlicexportcontrol.tsp?form_type=2&prod_no=ti_cgt_c6000_6.0.7_setup_linux_x86.bin&ref_url=http://software-dl.ti.com/dsps/dsps_registered_sw/sdo_ccstudio/codegen/C6000/6.0.7
+
+Framework Components
+http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/fc/3_30_00_06/exports/framework_components_3_30_00_06.tar.gz
+http://downloads.ti.com/dsps/dsps_registered_sw/sdo_sb/targetcontent/fc/fc_1_10_04/framework_components_1_10_04.tar.gz
 
 TMS320C6000 DSP Library (DSPLIB)
 http://www.ti.com/tool/SPRC265
@@ -179,6 +183,7 @@ c64xplus-iqmath_2_01_04_00_Linux-x86_Setup.bin http://software-dl.ti.com/dsps/ds
 XDC Tools
 http://downloads.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/rtsc/
 http://downloads.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/rtsc/3_25_05_94/exports/xdctools_setuplinux_3_25_05_94.bin
+
 
 
 Make it Go!

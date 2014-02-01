@@ -6,6 +6,8 @@ LICENSE_FLAGS = "commercial"
 PR = "r1"
 TI_PV = "${@bb.data.getVar('PV',d,1).replace('.', '_')}"
 
+DEPENDS = "ti-cgt6x-native"
+
 inherit native
 
 # TI_PKG_DIR should be set in layer.conf
@@ -31,7 +33,7 @@ do_compile() {
 }
 
 do_install() {
-    DISPLAY="" ./bios_setuplinux_${TI_PV}.bin -Y --mode silent --prefix "${D}${INSTALL_DIR}"
+    env -u DISPLAY ./bios_setuplinux_${TI_PV}.bin -Y --mode silent --prefix "${D}${INSTALL_DIR}"
     find "${D}${INSTALL_DIR}" -type d -print0 | xargs -0 chmod 755
     chmod 755 \
         "${D}${INSTALL_DIR}"/*/xdctools/cdb2tcf \

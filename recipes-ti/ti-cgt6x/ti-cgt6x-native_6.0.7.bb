@@ -30,7 +30,7 @@ do_compile() {
 }
 
 do_install() {
-    DISPLAY="" ./ti_cgt_c6000_${PV}_setup_linux_x86.bin --mode silent --prefix "${D}${INSTALL_DIR}/cgt6x-${PV}"
+    env -u DISPLAY ./ti_cgt_c6000_${PV}_setup_linux_x86.bin --mode silent --prefix "${D}${INSTALL_DIR}/cgt6x-${PV}"
     find "${D}${INSTALL_DIR}" -type d -print0 | xargs -0 chmod 755
     chmod 755 "${D}${INSTALL_DIR}"/*/bin/*
 }

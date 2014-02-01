@@ -12,6 +12,7 @@ DEPENDS = " \
     linux-gumstix \
     ti-dspbios-native \
     ti-cgt6x-native \
+    ti-framework_components \
     "
 
 PACKAGES = "${PN} ${PN}-dev ${PN}-dbg ${PN}-staticdev ti-dspbridge-mpusamples ti-dspbridge-dsp"

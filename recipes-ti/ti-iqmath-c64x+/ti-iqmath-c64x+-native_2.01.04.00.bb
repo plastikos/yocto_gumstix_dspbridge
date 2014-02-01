@@ -5,7 +5,8 @@ LICENSE_FLAGS = "commercial"
 
 PROVIDES = "ti-iqmath"
 
-#DEPENDS = "tcl-native tk-native"
+DEPENDS = "ti-cgt6x-native"
+#DEPENDS += "tcl-native tk-native"
 
 PR = "r1"
 TI_PV = "${@bb.data.getVar('PV',d,1).replace('.', '_')}"
@@ -13,7 +14,7 @@ TI_PV = "${@bb.data.getVar('PV',d,1).replace('.', '_')}"
 PACKAGES = "${PN} ${PN}-dev"
 FILES_${PN}-dev = "${INSTALL_DIR}"
 
-inherit pkgconfig
+inherit native
 
 # TI_PKG_DIR should be set in layer.conf
 FILESEXTRAPATHS_prepend := "${TI_PKG_DIR}:"
@@ -39,10 +40,7 @@ do_compile() {
 }
 
 do_install() {
-    env
     mkdir -p "${D}${INSTALL_DIR}"
     chmod 755 "${BIN_INSTALLER}"
-    echo Y | DISPLAY="" "./${BIN_INSTALLER}" --mode console --prefix "${D}${INSTALL_DIR}"
-    find .
-    #rm -f "${D}${INSTALL_DIR}/uninstall"
+    echo Y | env -u DISPLAY "./${BIN_INSTALLER}" --mode console --prefix "${D}${INSTALL_DIR}"
 }

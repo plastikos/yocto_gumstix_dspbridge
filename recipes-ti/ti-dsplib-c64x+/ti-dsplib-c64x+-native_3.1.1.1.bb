@@ -5,13 +5,15 @@ LICENSE_FLAGS = "commercial"
 
 PROVIDES = "ti-dsplib"
 
+DEPENDS = "ti-cgt6x-native"
+
 PR = "r1"
 TI_PV = "${@bb.data.getVar('PV',d,1).replace('.', '_')}"
 
 PACKAGES = "${PN} ${PN}-dev"
 FILES_${PN}-dev = "${INSTALL_DIR}"
 
-inherit pkgconfig
+inherit native
 
 # TI_PKG_DIR should be set in layer.conf
 FILESEXTRAPATHS_prepend := "${TI_PKG_DIR}:"
@@ -34,6 +36,6 @@ do_compile() {
 }
 
 do_install() {
-    DISPLAY="" ./dsplib_c64Px_${TI_PV}_Linux.bin --mode silent --prefix "${D}${INSTALL_DIR}"
+    env -u DISPLAY ./dsplib_c64Px_${TI_PV}_Linux.bin --mode silent --prefix "${D}${INSTALL_DIR}"
     rm -f "${D}${INSTALL_DIR}/uninstall"
 }
