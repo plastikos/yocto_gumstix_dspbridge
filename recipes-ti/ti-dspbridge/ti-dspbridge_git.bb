@@ -12,7 +12,6 @@ DEPENDS = " \
     linux-gumstix \
     ti-dspbios-native \
     ti-cgt6x-native \
-    ti-framework_components \
     "
 
 PACKAGES = "${PN} ${PN}-dev ${PN}-dbg ${PN}-staticdev ti-dspbridge-mpusamples ti-dspbridge-dsp"
@@ -39,7 +38,7 @@ do_compile() {
         CROSS='${TARGET_PREFIX}' \
         KRNLSRC=${STAGING_KERNEL_DIR} \
         DEPOT=${STAGING_DIR_NATIVE}/opt/ti-tools \
-        .api .samples .dsp
+        .api
 
     make \
         CROSS='${TARGET_PREFIX}' \
@@ -52,12 +51,6 @@ do_compile() {
         KRNLSRC=${STAGING_KERNEL_DIR} \
         DEPOT=${STAGING_DIR_NATIVE}/opt/ti-tools \
         .dsp
-
-    make \
-        CROSS='${TARGET_PREFIX}' \
-        KRNLSRC=${STAGING_KERNEL_DIR} \
-        DEPOT=${STAGING_DIR_NATIVE}/opt/ti-tools \
-        -f samplemakefile .bridge_samples
 }
 
 do_install() {

@@ -30,17 +30,29 @@ SRC_URI[md5sum] = "541fbb81627f0cc6c7eaa357dfaf7b24"
 
 S = "${WORKDIR}"
 
-INSTALL_DIR = "${libdir}/ti-tools/iqmath_c64x+-${PV}"
+TI_TOOLS_DIR = "/opt/ti-tools"
+INSTALL_DIR = "${TI_TOOLS_DIR}/iqmath_c64x+-${PV}"
 INHIBIT_PACKAGE_STRIP = "1"
 PSEUDO_DISABLED = "1"
+
 
 # Nothing to compile
 do_compile() {
     :
 }
 
+
 do_install() {
     mkdir -p "${D}${INSTALL_DIR}"
     chmod 755 "${BIN_INSTALLER}"
     echo Y | env -u DISPLAY "./${BIN_INSTALLER}" --mode console --prefix "${D}${INSTALL_DIR}"
+}
+
+
+do_populate_sysroot() {
+    if [ "populate_sysroot" = "${BB_CURRENTTASK}" -o "populate_sysroot_setscene" = "${BB_CURRENTTASK}" ]; then
+        # Ensure that ${INSTALL_DIR} gets put where it will be found
+        mkdir -p "${SYSROOT_DESTDIR}${STAGING_DIR_NATIVE}"
+        tar -C "${D}" -cf - . | tar -C "${SYSROOT_DESTDIR}${STAGING_DIR_NATIVE}" -xf -
+    fi
 }

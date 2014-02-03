@@ -27,15 +27,27 @@ SRC_URI[md5sum] = "9a6a94a48d2098174ec2d31de399ef34"
 
 S = "${WORKDIR}"
 
-INSTALL_DIR = "${libdir}/ti-tools/dsplib_c64x+-${PV}"
+TI_TOOLS_DIR = "/opt/ti-tools"
+INSTALL_DIR = "${TI_TOOLS_DIR}/dsplib_c64x+-${PV}"
 INHIBIT_PACKAGE_STRIP = "1"
+
 
 # Nothing to compile
 do_compile() {
     :
 }
 
+
 do_install() {
     env -u DISPLAY ./dsplib_c64Px_${TI_PV}_Linux.bin --mode silent --prefix "${D}${INSTALL_DIR}"
     rm -f "${D}${INSTALL_DIR}/uninstall"
+}
+
+
+do_populate_sysroot() {
+    if [ "populate_sysroot" = "${BB_CURRENTTASK}" -o "populate_sysroot_setscene" = "${BB_CURRENTTASK}" ]; then
+        # Ensure that ${INSTALL_DIR} gets put where it will be found
+        mkdir -p "${SYSROOT_DESTDIR}${STAGING_DIR_NATIVE}"
+        tar -C "${D}" -cf - . | tar -C "${SYSROOT_DESTDIR}${STAGING_DIR_NATIVE}" -xf -
+    fi
 }

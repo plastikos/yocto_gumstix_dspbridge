@@ -22,15 +22,18 @@ SRC_URI[md5sum] = "fcffe1618f20024fd6580f47cdc0059b"
 
 S = "${WORKDIR}"
 
-INSTALL_DIR = "/opt/ti-tools"
+TI_TOOLS_DIR = "/opt/ti-tools"
+INSTALL_DIR = "${TI_TOOLS_DIR}"
 
 PACAKGES = "${PN}"
 FILES_${PN} = "${INSTALL_DIR}/*"
+
 
 # Nothing to compile
 do_compile() {
     :
 }
+
 
 do_install() {
     env -u DISPLAY ./bios_setuplinux_${TI_PV}.bin -Y --mode silent --prefix "${D}${INSTALL_DIR}"
@@ -48,10 +51,11 @@ do_install() {
         "${D}${INSTALL_DIR}"/*/xdctools/bin/* \
 }
 
+
 do_populate_sysroot() {
     if [ "populate_sysroot" = "${BB_CURRENTTASK}" -o "populate_sysroot_setscene" = "${BB_CURRENTTASK}" ]; then
         # Ensure that ${INSTALL_DIR} gets put where it will be found
         mkdir -p "${SYSROOT_DESTDIR}${STAGING_DIR_NATIVE}"
         tar -C "${D}" -cf - . | tar -C "${SYSROOT_DESTDIR}${STAGING_DIR_NATIVE}" -xf -
-	fi
+    fi
 }
