@@ -30,7 +30,7 @@ SRC_URI[md5sum] = "541fbb81627f0cc6c7eaa357dfaf7b24"
 
 S = "${WORKDIR}"
 
-TI_TOOLS_DIR = "/opt/ti-tools"
+TI_TOOLS_DIR = "${TI_DEPOT_DIR}"
 INSTALL_DIR = "${TI_TOOLS_DIR}/iqmath_c64x+-${PV}"
 INHIBIT_PACKAGE_STRIP = "1"
 PSEUDO_DISABLED = "1"

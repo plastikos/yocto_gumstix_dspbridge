@@ -1,13 +1,7 @@
-PRIORITY = "optional"
-DESCRIPTION = "Texas Instruments MPU/DSP Bridge libraries, utilities."
-LICENSE = "GPLv2"
+include ti-dspbridge-common_git.inc
 
-LIC_FILES_CHKSUM = "\
-    file://source/mpu_api/COPYING;md5=7266a93b753b03bc5f00522e65722b79\
-    file://source/samples/LICENSE;md5=d229da563da18fe5d58cd95a6467d584\
-    "
+inherit pkgconfig
 
-PR = "r1"
 DEPENDS = " \
     linux-gumstix \
     ti-dspbios-native \
@@ -18,18 +12,6 @@ PACKAGES = "${PN} ${PN}-dev ${PN}-dbg ${PN}-staticdev ti-dspbridge-mpusamples ti
 FILES_ti-dspbridge-mpusamples = "/dspbridge/samples"
 FILES_ti-dspbridge-dsp        = "/dspbridge/dsp"
 
-
-inherit pkgconfig
-
-S = "${WORKDIR}/git"
-
-SRCREV = "${AUTOREV}"
-PV = "23.0+git+${SRCREV}"
-
-SRC_URI = "git://dev.omapzoom.org/pub/scm/tidspbridge/userspace-dspbridge.git;protocol=git;branch=master \
-           file://build_mk_fix.patch \
-          "
-
 do_compile() {
 
     cd "${S}/source"
@@ -37,19 +19,19 @@ do_compile() {
     make \
         CROSS='${TARGET_PREFIX}' \
         KRNLSRC=${STAGING_KERNEL_DIR} \
-        DEPOT=${STAGING_DIR_NATIVE}/opt/ti-tools \
+        DEPOT=${STAGING_DIR_NATIVE}${TI_DEPOT_DIR} \
         .api
 
     make \
         CROSS='${TARGET_PREFIX}' \
         KRNLSRC=${STAGING_KERNEL_DIR} \
-        DEPOT=${STAGING_DIR_NATIVE}/opt/ti-tools \
+        DEPOT=${STAGING_DIR_NATIVE}${TI_DEPOT_DIR} \
         .samples
 
     make \
         CROSS='${TARGET_PREFIX}' \
         KRNLSRC=${STAGING_KERNEL_DIR} \
-        DEPOT=${STAGING_DIR_NATIVE}/opt/ti-tools \
+        DEPOT=${STAGING_DIR_NATIVE}${TI_DEPOT_DIR} \
         .dsp
 }
 
@@ -60,7 +42,7 @@ do_install() {
     #make \
     #    CROSS='${TARGET_PREFIX}' \
     #    KRNLSRC='${STAGING_KERNEL_DIR}' \
-    #    DEPOT='${STAGING_DIR_NATIVE}/opt/ti-tools' \
+    #    DEPOT='${STAGING_DIR_NATIVE}${TI_DEPOT_DIR}' \
     #    TARGETDIR='${D}' \
     #    -f samplemakefile .install
     #
@@ -80,7 +62,7 @@ do_install() {
     install -m 0755 "${S}/source/samples/utils/uninstall_bridge" "${D}/dspbridge/samples"
 
     install -d ${D}/dspbridge/dsp
-    install -m 0644 ${S}/source/samples/dsp/*.dll64P ${S}/source/samples/dsp/*.dof64P ${D}/dspbridge/dsp
+    install -m 0644 "${S}/source/samples/dsp/"*.dll64P "${S}/source/samples/dsp/"*.dof64P "${D}/dspbridge/dsp"
 
     printf "Installing STAGING_BINDIR: ${STAGING_BINDIR}/dspbridge/samples\n"
     install -d "${STAGING_BINDIR}/dspbridge/samples"

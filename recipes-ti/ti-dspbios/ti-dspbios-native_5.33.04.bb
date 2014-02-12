@@ -22,7 +22,7 @@ SRC_URI[md5sum] = "fcffe1618f20024fd6580f47cdc0059b"
 
 S = "${WORKDIR}"
 
-TI_TOOLS_DIR = "/opt/ti-tools"
+TI_TOOLS_DIR = "${TI_DEPOT_DIR}"
 INSTALL_DIR = "${TI_TOOLS_DIR}"
 
 PACAKGES = "${PN}"

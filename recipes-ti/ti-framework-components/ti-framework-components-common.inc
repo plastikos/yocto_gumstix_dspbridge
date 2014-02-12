@@ -26,7 +26,7 @@ SRC_URI = "\
 
 S = "${WORKDIR}"
 
-TI_TOOLS_DIR = "/opt/ti-tools"
+TI_TOOLS_DIR = "${TI_DEPOT_DIR}"
 INSTALL_DIR = "${TI_TOOLS_DIR}/${FC_NAME}"
 INHIBIT_PACKAGE_STRIP = "1"
 

@@ -27,7 +27,7 @@ SRC_URI[md5sum] = "9a6a94a48d2098174ec2d31de399ef34"
 
 S = "${WORKDIR}"
 
-TI_TOOLS_DIR = "/opt/ti-tools"
+TI_TOOLS_DIR = "${TI_DEPOT_DIR}"
 INSTALL_DIR = "${TI_TOOLS_DIR}/dsplib_c64x+-${PV}"
 INHIBIT_PACKAGE_STRIP = "1"
 
