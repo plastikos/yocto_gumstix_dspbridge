@@ -11,4 +11,4 @@ SRC_URI = "\
            file://ti_license.txt \
           "
 
-SRC_URI[sha256sum] = "2c1e7feec569a19d3093b136da6aa03574f94052810fe7a78cc81eb37adda24b"
+SRC_URI[sha256sum] = "52136fce50becd7ae711eebe8943f8a62d06d18f03f374aad8129a6e3dc7e887"
