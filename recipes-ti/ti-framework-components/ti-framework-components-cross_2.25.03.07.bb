@@ -1,4 +1,4 @@
-include ti-framework-components-common.inc
+require ti-framework-components.inc
 
 PR = "r1"
 

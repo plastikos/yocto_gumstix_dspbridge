@@ -1,5 +1,6 @@
 require linux.inc
 
+PROVIDES += "linux-gumstix"
 PROVIDES += "virtual/kernel"
 
 DESCRIPTION = "Linux kernel for OMAP processors"

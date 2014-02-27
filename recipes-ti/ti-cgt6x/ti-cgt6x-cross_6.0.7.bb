@@ -1,47 +1,41 @@
-DESCRIPTION = "Texas Instruments Framework Components using XDAIS."
+DESCRIPTION = "Texas Instruments Code Generation Tool gen 6."
 
 LICENSE = "CLOSED"
 LICENSE_FLAGS = "commercial"
 
-PROVIDES = "ti-fc"
-
-DEPENDS = "ti-cgt6x-native"
+DEPENDS = "ti-xdctools-cross"
 
 PR = "r1"
-TI_PV = "${@bb.data.getVar('PV',d,1).replace('.', '_')}"
-FC_NAME = "framework_components_${TI_PV}"
 
-PACKAGES = "${PN} ${PN}-dev"
-FILES_${PN}-dev = "${INSTALL_DIR}"
-
-inherit native
+inherit cross
 
 # TI_PKG_DIR should be set in layer.conf
 FILESEXTRAPATHS_prepend := "${TI_PKG_DIR}:"
 
 SRC_URI = "\
-           file://${FC_NAME}.tar.gz;unpack=False \
+           file://ti_cgt_c6000_${PV}_setup_linux_x86.bin \
            file://ti_license.txt \
           "
 
+SRC_URI[md5sum] = "a4ff6ebf4f76547b44544e660c1c888e"
+
 S = "${WORKDIR}"
 
-TI_TOOLS_DIR = "${TI_DEPOT_DIR}"
-INSTALL_DIR = "${TI_TOOLS_DIR}/${FC_NAME}"
-INHIBIT_PACKAGE_STRIP = "1"
+INSTALL_DIR = "${TI_DEPOT_DIR}"
 
+PACAKGES = "${PN}"
+FILES_${PN} = "${INSTALL_DIR}/*"
 
 # Nothing to compile
 do_compile() {
     :
 }
 
-
 do_install() {
-    mkdir -p "${D}${TI_TOOLS_DIR}"
-    tar -C "${D}${TI_TOOLS_DIR}" -x -f "./${FC_NAME}.tar.gz"
+    env -u DISPLAY ./ti_cgt_c6000_${PV}_setup_linux_x86.bin --mode silent --prefix "${D}${INSTALL_DIR}/cgt6x-${PV}"
+    find "${D}${INSTALL_DIR}" -type d -print0 | xargs -0 chmod 755
+    chmod 755 "${D}${INSTALL_DIR}"/*/bin/*
 }
-
 
 do_populate_sysroot() {
     if [ "populate_sysroot" = "${BB_CURRENTTASK}" -o "populate_sysroot_setscene" = "${BB_CURRENTTASK}" ]; then

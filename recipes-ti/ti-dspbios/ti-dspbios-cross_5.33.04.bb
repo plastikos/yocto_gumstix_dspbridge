@@ -6,13 +6,14 @@ LICENSE_FLAGS = "commercial"
 PR = "r1"
 TI_PV = "${@bb.data.getVar('PV',d,1).replace('.', '_')}"
 
-DEPENDS = "ti-cgt6x-native"
+DEPENDS = "ti-cgt6x-cross"
 
-inherit native
+inherit cross
 
 # TI_PKG_DIR should be set in layer.conf
 FILESEXTRAPATHS_prepend := "${TI_PKG_DIR}:"
 
+#http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/dspbios/5_42_01_09/exports/bios_setuplinux_5_42_01_09.bin
 SRC_URI = "\
            file://bios_setuplinux_${TI_PV}.bin \
            file://ti_license.txt \
