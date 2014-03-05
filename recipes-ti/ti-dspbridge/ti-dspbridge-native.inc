@@ -7,6 +7,9 @@ INHIBIT_PACKAGE_STRIP = "1"
 
 
 do_install_append() {
+    # FIXME: The kernel build should install the dspbride files into
+    # /usr/include/linux
+
     oe_libinstall -so -C "${S}/source/target/lib" libbridge "${D}${libdir}"
     oe_libinstall -so -C "${S}/source/target/lib" libqos    "${D}${libdir}"
 

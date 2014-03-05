@@ -2,6 +2,9 @@ inherit cross
 
 
 do_install_append() {
+    # FIXME: The kernel build should install the dspbride files into
+    # /usr/include/linux
+
     # Install TI Bridgetools which are only found in ti-dspbridge source
     rm -rf "${D}${TI_DEPOT_DIR}/dspbridge"
     install -d "${D}${TI_DEPOT_DIR}/dspbridge"
