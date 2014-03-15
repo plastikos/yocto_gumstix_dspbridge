@@ -1,6 +1,7 @@
 
 SRC_URI = "git://dev.omapzoom.org/pub/scm/tidspbridge/userspace-dspbridge.git;protocol=git;branch=master \
            file://build_mk_fix.patch \
+           file://disable_press_any_key.patch \
           "
 
 LIC_FILES_CHKSUM = "\

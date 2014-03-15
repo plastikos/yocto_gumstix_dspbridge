@@ -1,0 +1,13 @@
+diff --git a/source/samples/mpu/src/cexec/cexec.c b/source/samples/mpu/src/cexec/cexec.c
+index 08d435c..89980d4 100755
+--- a/source/samples/mpu/src/cexec/cexec.c
++++ b/source/samples/mpu/src/cexec/cexec.c
+@@ -104,7 +104,7 @@ INT main(INT argc, CHAR * argv[])
+ 	DSP_HPROCESSOR hProc;
+ 	int status = 0;
+ 	INT cArgc = 0;		/* local argc count. */
+-	bool fScriptable = false;
++	bool fScriptable = true;
+ 	extern char *optarg;
+ 	struct DSP_PROCESSORINFO dspInfo;
+ 	UINT numProcs;
