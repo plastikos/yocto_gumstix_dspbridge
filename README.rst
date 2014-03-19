@@ -257,3 +257,12 @@ Make a bitbake recipe
 Build source::
 
   >$ bitbake -v -b $SOME_PATH/recipes-srf/dsp-demo_0.1.bb
+
+
+MESS WITH DSP Files
+==================
+
+to build the base image for the dsp, go to the following folder (assuming the yocto project is in ~/yocto) and run the second line::
+
+  >$ cd ~/yocto/build/tmp/work/armv7a-vfp-neon-poky-linux-gnueabi/ti-dspbridge-cross/23.0+git+AUTOINC-r0/git/source
+  >$ ~/yocto/build/tmp/sysroots/x86_64-linux/opt/ti-tools/xdctools_3_16_05_41/gmake -f samplemakefile .sample
