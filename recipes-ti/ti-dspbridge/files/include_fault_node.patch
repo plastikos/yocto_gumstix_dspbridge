@@ -1,0 +1,47 @@
+diff --git a/source/samples/dsp/package.bld b/source/samples/dsp/package.bld
+index 637494b..ddf3776 100755
+--- a/source/samples/dsp/package.bld
++++ b/source/samples/dsp/package.bld
+@@ -57,7 +57,7 @@ var programs = [
+                    "pinglib", "pingdata", "strmcopyCreate",
+                    "strmcopyExecute", "strmcopyDelete", "iscale",
+                    "scale_ti", "scale_ti_vtab", "ssktcrea", "ssktexec",
+-                   "ssktdele", "zcmsgCreate", "zcmsgDelete", "zcmsgExecute", "dmmcopyCreate", "dmmcopyDelete", "dmmcopyExecute" ]
++                   "ssktdele", "zcmsgCreate", "zcmsgDelete", "zcmsgExecute", "dmmcopyCreate", "dmmcopyDelete", "dmmcopyExecute" , "faultexecute" , "faultdelete" , "faultcreate" ]
+     },
+     {
+         name:    "dynbase",
+@@ -96,7 +96,7 @@ var programs64 = [
+                    "pinglib", "pingdata", "strmcopyCreate",
+                    "strmcopyExecute", "strmcopyDelete", "iscale",
+                    "scale_ti", "scale_ti_vtab", "ssktcrea", "ssktexec",
+-                   "ssktdele", "zcmsgCreate", "zcmsgDelete", "zcmsgExecute", "dmmcopyCreate", "dmmcopyDelete", "dmmcopyExecute" ]
++                   "ssktdele", "zcmsgCreate", "zcmsgDelete", "zcmsgExecute", "dmmcopyCreate", "dmmcopyDelete", "dmmcopyExecute" , "faultexecute" , "faultdelete" , "faultcreate" ]
+     },
+     {
+         name:    "dynbase",
+@@ -157,8 +157,24 @@ var components = {
+         ],
+     },
+ 
++    "faultdyn" : {
++        configuration : {
++            nodeName:  "faultdyn",
++            tcfName:   "faultdyn.tcf",
++            chartName: undefined,
++        },
++        libraries : [
++            {
++                name:    "faultdyn",
++                type:    "node",
++                sources: [ "faultcreate", "faultexecute", "faultdelete" ]
++            },
++        ],
++    },
++
+     "strmcopydyn" : {
+         configuration : {
++
+             nodeName:  "strmcopydyn",
+             tcfName:   "strmcopydyn.tcf",
+             chartName: undefined,

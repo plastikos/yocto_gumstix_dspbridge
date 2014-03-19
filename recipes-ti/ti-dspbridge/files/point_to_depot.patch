@@ -1,0 +1,13 @@
+diff --git a/source/samplemakefile b/source/samplemakefile
+index ac9f772..bf671e3 100755
+--- a/source/samplemakefile
++++ b/source/samplemakefile
+@@ -32,7 +32,7 @@ endif
+ 
+ ifndef DEPOT
+     ifneq ($(BUILD_HOST_OS), Windows)
+-        DEPOT = /db/atree/library/trees/depot
++        DEPOT = ~/yocto/build/tmp/sysroots/x86_64-linux/opt/ti-tools
+     else
+         DEPOT = c:/mytools
+     endif
