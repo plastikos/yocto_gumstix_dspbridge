@@ -266,3 +266,21 @@ to build the base image for the dsp, go to the following folder (assuming the yo
 
   >$ cd ~/yocto/build/tmp/work/armv7a-vfp-neon-poky-linux-gnueabi/ti-dspbridge-cross/23.0+git+AUTOINC-r0/git/source
   >$ ~/yocto/build/tmp/sysroots/x86_64-linux/opt/ti-tools/xdctools_3_16_05_41/gmake -f samplemakefile .sample
+
+
+
+HOW TO ADD A NEW NODE TO THE DSP
+================================
+
+in order to build a node named $NODE you need at least a $NODEExecute.c, $NODEDelete.c, $NODECreate.c. Any other libraries you want to add will need to be included at a later date. 
+
+Another important file to make is $NODE.tci. This file contains all of the configuration for your node. Importantly, the uuid needs to be specified different from any other node (doens't matter what it is). The .tci file will contain all of the references to your nodes as well as the libraries you will include. 
+
+finally if you are making the node dynamically loadable it is important to create a $NODEdyn.tcf. This file specifies all of the dependencies so that the dll when created will be independent of any other file.
+
+then go to package.bld and add all of the files to the base image portion (I did it for all 2). 
+finally, if you are making a dll64p, you need to add a section under pingdyn and include the appropriate additions
+
+finally if you are adding the files to the base image, you need to modify the ddspbbase.tci to include the new node.
+
+In order to use the node you have to create a userspace file, usually called $NODE.c. Once you have created this file, be sure to use the same uuid as specified in $NODE.tci. If you have no compile issues, when you load either the dll, or the base image that contains your node, you can then run the new node.
