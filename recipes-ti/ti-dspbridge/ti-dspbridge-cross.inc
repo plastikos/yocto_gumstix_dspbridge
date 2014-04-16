@@ -23,7 +23,10 @@ do_install_append() {
     oe_libinstall -so -C "${S}/source/target/lib" libqos    "${D}${TI_DEPOT_DIR}/dspbridge/mpu/lib"
 
     install -d "${D}${TI_DEPOT_DIR}/dspbridge/mpu/inc"
-    install -m 0644 "${S}/source/mpu_api/inc/"*.h "${D}${TI_DEPOT_DIR}/dspbridge/mpu/inc"
+    # NOTE: the source/samples/mpu/inc is more complete than source/mpu_api_inc
+    # It is unclear why they are comparable, yet different.
+    # install -m 0644 "${S}/source/mpu_api/inc/"*.h "${D}${TI_DEPOT_DIR}/dspbridge/mpu/inc"
+    install -m 0644 "${S}/source/samples/mpu/inc/"*.h "${D}${TI_DEPOT_DIR}/dspbridge/mpu/inc"
 }
 
 
