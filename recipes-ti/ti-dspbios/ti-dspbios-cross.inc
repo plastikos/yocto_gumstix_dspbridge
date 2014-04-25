@@ -31,17 +31,19 @@ do_install() {
     chmod 755 ./bios_setuplinux_${TI_PV}.bin
     env -u DISPLAY ./bios_setuplinux_${TI_PV}.bin -Y --mode silent --prefix "${D}${INSTALL_DIR}"
     find "${D}${INSTALL_DIR}" -type d -print0 | xargs -0 chmod 755
-    chmod 755 \
-        "${D}${INSTALL_DIR}"/*/xdctools/cdb2tcf \
-        "${D}${INSTALL_DIR}"/*/xdctools/bioscfg \
-        "${D}${INSTALL_DIR}"/*/xdctools/gmake \
-        "${D}${INSTALL_DIR}"/*/xdctools/tconf \
-        "${D}${INSTALL_DIR}"/*/xdctools/tconf.x86U \
-        "${D}${INSTALL_DIR}"/*/xdctools/vers \
-        "${D}${INSTALL_DIR}"/*/xdctools/xdc \
-        "${D}${INSTALL_DIR}"/*/xdctools/xs \
-        "${D}${INSTALL_DIR}"/*/xdctools/xs.x86U \
-        "${D}${INSTALL_DIR}"/*/xdctools/bin/* \
+    if [ -d "${D}${INSTALL_DIR}/${TI_PV}/xdctools" ]; then
+        chmod 755 \
+            "${D}${INSTALL_DIR}/"*/xdctools/cdb2tcf \
+            "${D}${INSTALL_DIR}/"*/xdctools/bioscfg \
+            "${D}${INSTALL_DIR}/"*/xdctools/gmake \
+            "${D}${INSTALL_DIR}/"*/xdctools/tconf \
+            "${D}${INSTALL_DIR}/"*/xdctools/tconf.x86U \
+            "${D}${INSTALL_DIR}/"*/xdctools/vers \
+            "${D}${INSTALL_DIR}/"*/xdctools/xdc \
+            "${D}${INSTALL_DIR}/"*/xdctools/xs \
+            "${D}${INSTALL_DIR}/"*/xdctools/xs.x86U \
+            "${D}${INSTALL_DIR}/"*/xdctools/bin/*
+    fi
 }
 
 
