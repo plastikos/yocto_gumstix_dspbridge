@@ -1,5 +1,7 @@
+bdinfo
+flinfo
 setenv bootargs 'console=ttyO2,115200n8 root=/dev/mmcblk0p2 rw rootfstype=ext3 rootwait'
-setenv bootdelay 1
+setenv bootdelay 100
 mmc init
 fatload mmc 0:1 0x80300000 uImage
 bootm 0x80300000
