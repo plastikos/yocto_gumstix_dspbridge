@@ -1,10 +1,17 @@
-DESCRIPTION = "Texas Instruments XDC (eXpanDed C) Tools."
+DESCRIPTION = "Texas Instruments Code Generation Tool gen 6."
 
 LICENSE = "CLOSED"
 LICENSE_FLAGS = "commercial"
 
+DEPENDS = "ti-xdctools-cross"
+
 TI_PV = "${@bb.data.getVar('PV',d,1).replace('.', '_')}"
 TI_PKG = "xdctools_setuplinux_${TI_PV}.bin"
+
+SRC_URI = "\
+           file://ti_cgt_c6000_${PV}_setup_linux_x86.bin \
+           file://ti_license.txt \
+          "
 
 inherit cross
 
@@ -15,7 +22,7 @@ S = "${WORKDIR}"
 
 INSTALL_DIR = "${TI_DEPOT_DIR}"
 
-PACAKGES = "${PN}"
+PACKAGES = "${PN}"
 FILES_${PN} = "${INSTALL_DIR}/*"
 
 # Nothing to compile
@@ -24,8 +31,9 @@ do_compile() {
 }
 
 do_install() {
-    chmod a+x ./${TI_PKG}
-    env -u DISPLAY ./${TI_PKG} ${XTRACT_ARGS} --prefix "${D}${INSTALL_DIR}"
+    env -u DISPLAY ./ti_cgt_c6000_${PV}_setup_linux_x86.bin --mode silent --prefix "${D}${INSTALL_DIR}/cgt6x-${PV}"
+    find "${D}${INSTALL_DIR}" -type d -print0 | xargs -0 chmod 755
+    chmod 755 "${D}${INSTALL_DIR}"/*/bin/*
 }
 
 do_populate_sysroot() {
