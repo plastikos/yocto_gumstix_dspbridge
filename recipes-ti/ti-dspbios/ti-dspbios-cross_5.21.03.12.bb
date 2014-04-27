@@ -1,4 +1,4 @@
-PR = "r1"
+PR = "r2"
 
 TI_PV = "${@bb.data.getVar('PV',d,1).replace('.', '_')}"
 TI_PKG = "dsp_bios_setuplinux_${TI_PV}.sh"
@@ -13,3 +13,9 @@ SRC_URI[md5sum] = "a6706eb908febad37f26c7cd4975df90"
 SRC_URI[sha256sum] = "29cdbb74c1bd287808aad6a460cc23290a8f42c446ba7d00c38ff50a841011ce"
 
 require ${PN}_is.inc
+
+
+do_install_append() {
+    # Just doesn't install in a correctly versioned directory - fix it.
+    mv "${D}${INSTALL_DIR}/bios_5"* "${D}${INSTALL_DIR}/bios_${TI_PV}"
+}

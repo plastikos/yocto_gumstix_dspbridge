@@ -40,8 +40,9 @@ ${D}${INSTALL_DIR}
 
 1
 3
+
 EOF
-    rm -f "${D}{$INSTALL_DIR}/bios_install_log.txt"
+    rm -f "${D}${INSTALL_DIR}/bios_install_log.txt"
 }
 
 
