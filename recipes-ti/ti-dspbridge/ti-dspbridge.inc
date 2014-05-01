@@ -14,6 +14,7 @@ inherit autotools
 
 SABIOS_TI_VER = "${@bb.data.getVar('PREFERRED_VERSION_ti-dspbios-cross',d,1).replace('.', '_')}"
 XDC_TI_VER = "${@bb.data.getVar('PREFERRED_VERSION_ti-xdctools-cross',d,1).replace('.', '_')}"
+FC_TI_VER = "${@bb.data.getVar('PREFERRED_VERSION_ti-framework-components-cross',d,1).replace('.', '_')}"
 
 do_compile() {
 
@@ -28,6 +29,9 @@ do_compile() {
 	SABIOS_VER="${PREFERRED_VERSION_ti-dspbios-cross}" \
 	SABIOS_VER_2="${SABIOS_TI_VER}" \
 	CGT6X_VER="${PREFERRED_VERSION_ti-cgt6x-cross}" \
+	FC_VER="${FC_TI_VER}" \
+	FC_PACKAGE=FALSE \
+	FC_DIR="${DEPOT}/framework_components_${FC_TI_VER}/packages" \
 	DD_XDCDIR="${DEPOT}/xdctools_${XDC_TI_VER}" \
         .api
 
@@ -38,6 +42,9 @@ do_compile() {
 	SABIOS_VER="${PREFERRED_VERSION_ti-dspbios-cross}" \
 	SABIOS_VER_2="${SABIOS_TI_VER}" \
 	CGT6X_VER="${PREFERRED_VERSION_ti-cgt6x-cross}" \
+	FC_VER="${FC_TI_VER}" \
+	FC_PACKAGE=FALSE \
+	FC_DIR="${DEPOT}/framework_components_${FC_TI_VER}/packages" \
 	DD_XDCDIR="${DEPOT}/xdctools_${XDC_TI_VER}" \
         .samples
 
@@ -48,6 +55,9 @@ do_compile() {
 	SABIOS_VER="${PREFERRED_VERSION_ti-dspbios-cross}" \
 	SABIOS_VER_2="${SABIOS_TI_VER}" \
 	CGT6X_VER="${PREFERRED_VERSION_ti-cgt6x-cross}" \
+	FC_VER="${FC_TI_VER}" \
+	FC_PACKAGE=FALSE \
+	FC_DIR="${DEPOT}/framework_components_${FC_TI_VER}/packages" \
 	DD_XDCDIR="${DEPOT}/xdctools_${XDC_TI_VER}" \
         .dsp
 }
