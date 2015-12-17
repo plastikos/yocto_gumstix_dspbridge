@@ -2,6 +2,8 @@
  DSP Bridge
 ============
 
+:NOTE: Development on this has been abandoned.  Bugs will not be fixed and recipies will not be updated.  I'm sorry.
+
 `DSPBridge Project <http://www.omappedia.com/wiki/DSPBridge_Project>`_
 
 `Linux OMAP Project <http://omappedia.org/wiki/Linux_OMAP_Kernel_Project>`_
